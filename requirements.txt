@@ -1,1 +1,26 @@
+> git clone  https://github.com/sunaina156/Python_URL_Shortener.git
+
+# Set Virtual Environment
+> python --version
+> python -m venv venv   # means python run the venv module and create an evironment named "venv"
+> .\venv\Scripts\Activate.ps1
+we will see (venv) in terminal means our virtual environment is active.
+
+
+# create this directory structure
+Python_URL_Shortener/
+│
+├── venv/
+├── app.py
+├── requirements.txt
+├── .gitignore
+└── README.md
+
+create app.py
+
+# create .gitignore to store folders like venv
+venv/
+
+# create requirements.txt 
+
 
