@@ -41,3 +41,10 @@ Long URL + Short Code stored
 User enters Short Code
         ↓
 Python returns Original URL
+
+# * Created `main.py` and implemented the URL Shortener logic using Python.
+* Created a function to generate random 6-character short codes.
+* Stored short codes and original URLs using a Python dictionary.
+* Added URL retrieval and a menu-driven CLI with invalid-code handling.
+
+
