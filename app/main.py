@@ -66,7 +66,7 @@ def get_original_url(short_code):
 
     cursor.execute(
         """
-        SELECT original_url
+        SELECT id, original_url
         FROM urls
         WHERE short_code = %s;
         """,
@@ -79,7 +79,11 @@ def get_original_url(short_code):
     connection.close()
 
     if result:
-        return result[0]
+        url_id = result[0]
+        original_url = result[1]
+
+        record_click(url_id)  
+        return original_url
     else:
         return "Short code not found!"
 
@@ -94,7 +98,7 @@ def record_click(url_id):
         INSERT INTO clicks (url_id)
         VALUES(%s);
         """,
-        (url_id)
+        (url_id,)
     )
 
     connection.commit()
