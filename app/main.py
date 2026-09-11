@@ -1,8 +1,22 @@
 import random
 import string
+import psycopg2
+import os
+from dotenv import load_dotenv
 
-# Dictionary used to store short code and original URL
-url_storage = {}
+# Load environment variables from .env
+load_dotenv()
+
+def get_connection():
+     return psycopg2.connect(
+          host=os.getenv("DB_HOST"),
+          database=os.getenv("DB_NAME"),
+          user=os.getenv("DB_USER"),
+          password=os.getenv("DB_PASSWORD"),
+          port =os.getenv("DB_PORT")
+     )
+
+
 
 def generate_short_code():
     characters = string.ascii_letters + string.digits
@@ -17,30 +31,75 @@ def generate_short_code():
 
 # create a function that takes the original URL and stores it with the generated short code.
 # This function takes the original/long URL as input
-def store_url(original_url):
+def store_url(original_url, user_id):
 
-    # call the generate_short_code function
-    # It creates a random short code, for ex: "aB72xQ"
+    connection = get_connection()
+    cursor = connection.cursor()   # A cursor is what you use to send SQL commands to PostgreSQL.
+
     short_code = generate_short_code()
 
-    # store the original URL using the short code as the key so dictionary becomes { "short_code": "long_url"}
-    while short_code in url_storage:
-         short_code = generate_short_code()
-    url_storage[short_code] = original_url
+    cursor.execute(
+         """
+         INSERT INTO urls (short_code, original_url, user_id)
+         VALUES (%s, %s, %s)
+         RETURNING short_code;
+         """,
+         (short_code, original_url, user_id)
+    )
 
-    # return the generated short code
-    # This allows us to use the short code outisde this function
+    short_code = cursor.fetchone()[0]
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
     return short_code
-
 
 #---------------
 
 # Retrieve the Original URL
 def get_original_url(short_code):
-        if short_code in url_storage:
-            return url_storage[short_code]
-        else:
-             return "Short code not found!"
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+
+    cursor.execute(
+        """
+        SELECT original_url
+        FROM urls
+        WHERE short_code = %s;
+        """,
+        (short_code,)
+    )
+
+    result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
+
+    if result:
+        return result[0]
+    else:
+        return "Short code not found!"
+
+
+# Add Click Tracing Function
+def record_click(url_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO clicks (url_id)
+        VALUES(%s);
+        """,
+        (url_id)
+    )
+
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 #-----------------------
 # Menu
@@ -56,7 +115,7 @@ while True:
 
      if choice == "1":
           original_url = input("Enter the URL you want to shorten: ")
-          short_code = store_url(original_url)
+          short_code = store_url(original_url, 1)
           print("Short Code: ", short_code)
 
      elif choice == "2":
@@ -70,3 +129,7 @@ while True:
 
      else:
           print("Invalid choice! Please select 1, 2, or 3.")
+
+
+# ---------------------
+

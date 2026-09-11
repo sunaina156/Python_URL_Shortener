@@ -1,1 +1,4 @@
-venv/
+# venv/   # virtual environment
+# .env    # database password / configuration
+# __pycache__/  # Python cache
+# *.pyc   # compiled Python files
