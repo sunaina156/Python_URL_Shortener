@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>URL Shortener</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            LinkShort
+        </div>
+
+        <div class="nav-status">
+            FastAPI Powered
+        </div>
+    </header>
+
+
+    <main class="main-container">
+
+        <section class="hero-section">
+
+            <div class="badge">
+                ✨ Simple & Fast URL Shortener
+            </div>
+
+            <h1>
+                Make your links
+                <span>short and simple.</span>
+            </h1>
+
+            <p class="hero-description">
+                Transform long URLs into short, shareable links
+                with our simple URL shortener.
+            </p>
+
+        </section>
+
+
+        <section class="shortener-card">
+
+            <h2>Shorten your URL</h2>
+
+            <p class="card-description">
+                Enter your long URL below to generate a short link.
+            </p>
+
+
+            <form id="shorten-form">
+
+                <label for="url-input">
+                    Enter your URL
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">🔗</span>
+
+                    <input
+                        type="url"
+                        id="url-input"
+                        name="url"
+                        placeholder="https://example.com/your-long-url"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" id="shorten-button">
+                    Shorten URL
+                </button>
+
+            </form>
+
+
+            <div id="message" class="message"></div>
+
+
+            <div id="result-container" class="result-container hidden">
+
+                <h3>Your shortened URL</h3>
+
+                <div class="result-box">
+
+                    <a
+                        id="short-url"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                    </a>
+
+                    <button id="copy-button" type="button">
+                        Copy
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="features-section">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h3>Fast</h3>
+
+                <p>
+                    Quickly generate short URLs.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                <h3>Reliable</h3>
+
+                <p>
+                    Powered by FastAPI and PostgreSQL.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>Trackable</h3>
+
+                <p>
+                    Record clicks on shortened links.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <p>
+            Built with HTML, CSS, JavaScript & FastAPI
+        </p>
+
+    </footer>
+
+
+    <script src="javascript.js"></script>
+
+</body>
+</html>
